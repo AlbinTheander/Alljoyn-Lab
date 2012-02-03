@@ -46,7 +46,7 @@
         
         <service
             android:name="AllJoynService">
-        </service>service>
+        </service>
         
     </application>
 </manifest> 
