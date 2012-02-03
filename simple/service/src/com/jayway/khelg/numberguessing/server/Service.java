@@ -32,12 +32,15 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.text.Editable;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -83,6 +86,8 @@ public class Service extends Activity {
 
     /* Handler used to make calls to AllJoyn methods. See onCreate(). */
     private Handler mBusHandler;
+
+	private int mMyNumberi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -131,7 +136,15 @@ public class Service extends Activity {
         mBusHandler.sendEmptyMessage(BusHandler.DISCONNECT);        
     }
     
-    /* The class that is our AllJoyn service.  It implements the SimpleInterface. */
+    public void setNumber(final View view) {
+    	final EditText input = (EditText) findViewById(R.id.guessValue);
+    	final Editable editable = input.getText();
+    	if (editable != null) {
+    		mMyNumberi = Integer.parseInt(editable.toString());
+    	}
+    }
+    
+    /* The class tat is our AllJoyn service.  It implements the SimpleInterface. */
     class SimpleService implements SimpleInterface, BusObject {
 
         /*
@@ -158,7 +171,10 @@ public class Service extends Activity {
 
 		@Override
 		public int Guess(String name, int value) throws BusException {
-			return 0;
+        	final Pair<String, String> data = new Pair<String, String>(name, "guessed: " + value);
+			sendUiMessage(MESSAGE_PING, data);
+			
+			return value > mMyNumberi ? -1 : value < mMyNumberi ? 1 : 0;
 		}
     }
 
@@ -168,7 +184,7 @@ public class Service extends Activity {
          * Name used as the well-known name and the advertised name.  This name must be a unique name
          * both to the bus and to the network as a whole.  The name uses reverse URL style of naming.
          */
-        private static final String SERVICE_NAME = "org.alljoyn.bus.samples.simple";
+        private static final String SERVICE_NAME = "com.jayway.numberguess";
         private static final short CONTACT_PORT=42;
         
         private BusAttachment mBus;

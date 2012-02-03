@@ -4,6 +4,21 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="Write your number here"
+        android:id="@+id/guessValue"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set"
+        android:onClick="setNumber"
+        />
+        
+    
 	<ListView android:id="@+id/ListView" 
 		android:layout_width="fill_parent" 
 		android:layout_height="fill_parent"
