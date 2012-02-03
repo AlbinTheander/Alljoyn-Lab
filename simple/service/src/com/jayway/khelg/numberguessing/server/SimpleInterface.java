@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package org.alljoyn.bus.samples.simpleservice;
+package com.jayway.khelg.numberguessing.server;
 
 import org.alljoyn.bus.BusException;
 import org.alljoyn.bus.annotation.BusInterface;
@@ -27,7 +27,7 @@ import org.alljoyn.bus.annotation.BusMethod;
  * not given the fully qualified name of the Java interface is be used.  In most instances its best
  * to assign an interface name since it helps promote code reuse.
  */
-@BusInterface(name = "org.alljoyn.bus.samples.simple.SimpleInterface")
+@BusInterface(name = "com.jayway.khelg.numberguessing")
 public interface SimpleInterface {
 
     /*
@@ -40,4 +40,14 @@ public interface SimpleInterface {
      */
     @BusMethod
     String Ping(String name, String inStr) throws BusException;
+
+	/**
+	 * @param name
+	 * @param value
+	 * @param nbrOfGuesses
+	 * @return
+	 * @throws BusException
+	 */
+	@BusMethod
+	int Guess(String name, int value) throws BusException;
 }

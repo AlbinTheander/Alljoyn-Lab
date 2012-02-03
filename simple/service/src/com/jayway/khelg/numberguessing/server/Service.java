@@ -14,15 +14,17 @@
  *    limitations under the License.
  */
 
-package org.alljoyn.bus.samples.simpleservice;
+package com.jayway.khelg.numberguessing.server;
 
 import org.alljoyn.bus.BusAttachment;
+import org.alljoyn.bus.BusException;
 import org.alljoyn.bus.BusListener;
 import org.alljoyn.bus.BusObject;
 import org.alljoyn.bus.Mutable;
 import org.alljoyn.bus.SessionOpts;
 import org.alljoyn.bus.SessionPortListener;
 import org.alljoyn.bus.Status;
+import org.alljoyn.bus.samples.simpleservice.R;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -55,7 +57,7 @@ public class Service extends Activity {
     private ListView mListView;
     private Menu menu;
     
-    private Handler mHandler = new Handler() {
+    private final Handler mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
             	@SuppressWarnings("unchecked")
@@ -139,7 +141,8 @@ public class Service extends Activity {
          * This code also prints the string it received from the user and the string it is
          * returning to the user to the screen.
          */
-        public String Ping(String name, String inStr) {
+        @Override
+		public String Ping(String name, String inStr) {
         	final Pair<String, String> data = new Pair<String, String>(name, inStr);
             sendUiMessage(MESSAGE_PING, data);
 
@@ -152,6 +155,11 @@ public class Service extends Activity {
         private void sendUiMessage(int what, Object obj) {
             mHandler.sendMessage(mHandler.obtainMessage(what, obj));
         }
+
+		@Override
+		public int Guess(String name, int value) throws BusException {
+			return 0;
+		}
     }
 
     /* This class will handle all AllJoyn calls. See onCreate(). */

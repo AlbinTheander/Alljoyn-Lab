@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package org.alljoyn.bus.samples.simpleclient;
+package com.jayway.khelg.numberguessing.client;
 
 import org.alljoyn.bus.BusAttachment;
 import org.alljoyn.bus.BusException;
@@ -24,6 +24,7 @@ import org.alljoyn.bus.ProxyBusObject;
 import org.alljoyn.bus.SessionListener;
 import org.alljoyn.bus.SessionOpts;
 import org.alljoyn.bus.Status;
+import org.alljoyn.bus.samples.simpleclient.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>      
     <application android:icon="@drawable/icon" android:label="@string/app_name">
-        <activity android:name=".Client"
+        <activity android:name="com.jayway.khelg.numberguessing.client.Client"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait">
             <intent-filter>
