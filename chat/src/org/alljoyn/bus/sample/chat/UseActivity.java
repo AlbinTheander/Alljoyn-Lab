@@ -76,6 +76,7 @@ public class UseActivity extends Activity implements Observer {
                 if (editable != null) {
                     final String message = editable.toString();
                     mChatApplication.newLocalUserMessage(message);
+                    messageBox.setText("");
                 }
             }
         });
