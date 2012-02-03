@@ -32,13 +32,17 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -59,6 +63,7 @@ public class Client extends Activity {
     private static final String TAG = "SimpleClient";
 
     private EditText mEditText;
+    private Button mSendButton;
     private ArrayAdapter<String> mListViewArrayAdapter;
     private ListView mListView;
     private Menu menu;
@@ -122,6 +127,18 @@ public class Client extends Activity {
                     return true;
                 }
             });
+
+        mSendButton = (Button) findViewById(R.id.SendButton);
+        mSendButton.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                final Editable editable = mEditText.getText();
+                if (editable != null) {
+                    final String message = editable.toString();
+                    Message msg = mBusHandler.obtainMessage(BusHandler.PING, message);
+                    mBusHandler.sendMessage(msg);
+                }
+            }
+        });
 
         /* Make all AllJoyn calls through a separate handler thread to prevent blocking the UI. */
         HandlerThread busThread = new HandlerThread("BusHandler");
