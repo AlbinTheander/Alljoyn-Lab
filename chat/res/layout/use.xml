@@ -54,14 +54,25 @@
         />
     </LinearLayout>
     
-    <EditText
-        android:id="@+id/useMessage"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-		android:hint="Enter message here"
-    />
-       
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/useMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:hint="Enter message here"
+        />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send"
+            android:id="@+id/sendButton" />
+    </LinearLayout>
+           
     <ListView 
         android:id="@+id/useHistoryList"           
         android:layout_width="match_parent"

@@ -30,6 +30,7 @@ import android.app.Dialog;
 
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 
 import android.widget.ArrayAdapter;
@@ -38,6 +39,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import android.text.Editable;
 import android.util.Log;
 
 import java.util.List;
@@ -54,7 +56,7 @@ public class UseActivity extends Activity implements Observer {
         ListView hlv = (ListView) findViewById(R.id.useHistoryList);
         hlv.setAdapter(mHistoryList);
         
-        EditText messageBox = (EditText)findViewById(R.id.useMessage);
+        final EditText messageBox = (EditText)findViewById(R.id.useMessage);
         messageBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_NULL && event.getAction() == KeyEvent.ACTION_UP) {
@@ -67,6 +69,17 @@ public class UseActivity extends Activity implements Observer {
             }
         });
                 
+        Button button = (Button) findViewById(R.id.sendButton);
+        button.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                final Editable editable = messageBox.getText();
+                if (editable != null) {
+                    final String message = editable.toString();
+                    mChatApplication.newLocalUserMessage(message);
+                }
+            }
+        });
+        
         mJoinButton = (Button)findViewById(R.id.useJoin);
         mJoinButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
