@@ -58,6 +58,7 @@ public class Service extends Activity {
 
     private ArrayAdapter<String> mListViewArrayAdapter;
     private ListView mListView;
+    private EditText mGuessValue;
     private Menu menu;
     
     private final Handler mHandler = new Handler() {
@@ -87,12 +88,14 @@ public class Service extends Activity {
     /* Handler used to make calls to AllJoyn methods. See onCreate(). */
     private Handler mBusHandler;
 
-	private int mMyNumberi;
+	private int mMyNumber;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        mGuessValue = (EditText) findViewById(R.id.guessValue);
 
         mListViewArrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
         mListView = (ListView) findViewById(R.id.ListView);
@@ -140,7 +143,9 @@ public class Service extends Activity {
     	final EditText input = (EditText) findViewById(R.id.guessValue);
     	final Editable editable = input.getText();
     	if (editable != null) {
-    		mMyNumberi = Integer.parseInt(editable.toString());
+    		mMyNumber = Integer.parseInt(editable.toString());
+        	final Pair<String, String> data = new Pair<String, String>("You", Integer.toString(mMyNumber));
+            mHandler.sendMessage(mHandler.obtainMessage(MESSAGE_PING, data));
     	}
     }
     
@@ -173,8 +178,7 @@ public class Service extends Activity {
 		public int Guess(String name, int value) throws BusException {
         	final Pair<String, String> data = new Pair<String, String>(name, "guessed: " + value);
 			sendUiMessage(MESSAGE_PING, data);
-			
-			return value > mMyNumberi ? -1 : value < mMyNumberi ? 1 : 0;
+			return value > mMyNumber ? -1 : value < mMyNumber ? 1 : 0;
 		}
     }
 
