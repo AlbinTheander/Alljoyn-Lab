@@ -1,0 +1,13 @@
+target
+.project
+.settings
+.classpath
+gen
+bin
+.fbprefs
+.jupiter
+.DS_Store
+.idea
+*.iml
+s101plugin.state
+out
