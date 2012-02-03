@@ -23,5 +23,12 @@
 			android:layout_gravity="bottom" 
 			android:hint="@string/enter_message_hint" 
 			/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Send"
+            android:id="@+id/SendButton"
+            />
 	</LinearLayout>
 </LinearLayout>
