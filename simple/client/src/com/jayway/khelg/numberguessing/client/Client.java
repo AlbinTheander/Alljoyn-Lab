@@ -24,7 +24,7 @@ import org.alljoyn.bus.ProxyBusObject;
 import org.alljoyn.bus.SessionListener;
 import org.alljoyn.bus.SessionOpts;
 import org.alljoyn.bus.Status;
-import org.alljoyn.bus.samples.simpleclient.R;
+import com.jayway.khelg.numberguessing.client.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -60,6 +60,8 @@ public class Client extends Activity {
     private static final int MESSAGE_POST_TOAST = 3;
     private static final int MESSAGE_START_PROGRESS_DIALOG = 4;
     private static final int MESSAGE_STOP_PROGRESS_DIALOG = 5;
+    
+    private static final String NAME = "SuperClient";
 
     private static final String TAG = "SimpleClient";
 
@@ -188,7 +190,7 @@ public class Client extends Activity {
          *
          * The name uses reverse URL style of naming, and matches the name used by the service.
          */
-        private static final String SERVICE_NAME = "org.alljoyn.bus.samples.simple";
+        private static final String SERVICE_NAME = "com.jayway.numberguess";
         private static final short CONTACT_PORT=42;
 
         private BusAttachment mBus;
@@ -351,8 +353,35 @@ public class Client extends Activity {
                 try {
                 	if (mSimpleInterface != null) {
                 		sendUiMessage(MESSAGE_PING, msg.obj);
-                		String reply = mSimpleInterface.Ping("Banan", (String) msg.obj);
-                		sendUiMessage(MESSAGE_PING_REPLY, reply);
+                		int reply = mSimpleInterface.Guess(NAME, Integer.parseInt( (String)msg.obj));
+                		
+                		switch (reply) {
+                        case -3:
+                            sendUiMessage(MESSAGE_PING_REPLY, "Du är långt över");
+                            break;
+                        case -2:
+                            sendUiMessage(MESSAGE_PING_REPLY, "Du är en bit över");
+                            break;
+                        case -1:
+                            sendUiMessage(MESSAGE_PING_REPLY, "Du är en liten, liten bit över");
+                            break;
+                        case 0:
+                            sendUiMessage(MESSAGE_PING_REPLY, "Du är en vinnare!!!   :-) ");
+                            break;
+                        case 3:
+                            sendUiMessage(MESSAGE_PING_REPLY, "Du är långt under");
+                            break;
+                        case 2:
+                            sendUiMessage(MESSAGE_PING_REPLY, "Du är en bit under");
+                            break;
+                        case 1:
+                            sendUiMessage(MESSAGE_PING_REPLY, "Du är en liten, liten bit under");
+                            break;
+                        default:
+                            break;
+                        }
+                		
+                		
                 	}
                 } catch (BusException ex) {
                     logException("SimpleInterface.Ping()", ex);
