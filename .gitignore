@@ -11,3 +11,4 @@ bin
 *.iml
 s101plugin.state
 out
+project.properties
