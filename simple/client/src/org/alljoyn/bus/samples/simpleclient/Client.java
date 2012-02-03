@@ -350,7 +350,7 @@ public class Client extends Activity {
                 try {
                 	if (mSimpleInterface != null) {
                 		sendUiMessage(MESSAGE_PING, msg.obj);
-                		String reply = mSimpleInterface.Ping((String) msg.obj);
+                		String reply = mSimpleInterface.Ping("Banan", (String) msg.obj);
                 		sendUiMessage(MESSAGE_PING_REPLY, reply);
                 	}
                 } catch (BusException ex) {

@@ -39,5 +39,5 @@ public interface SimpleInterface {
      * this fact.
      */
     @BusMethod
-    String Ping(String inStr) throws BusException;
+    String Ping(String name, String inStr) throws BusException;
 }

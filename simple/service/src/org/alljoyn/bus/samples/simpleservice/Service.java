@@ -31,6 +31,7 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -57,17 +58,17 @@ public class Service extends Activity {
     private Handler mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
+            	@SuppressWarnings("unchecked")
+				final Pair<String, String> data = (Pair<String, String>) msg.obj;
                 switch (msg.what) {
                 case MESSAGE_PING:
-                    String ping = (String) msg.obj;
-                    mListViewArrayAdapter.add("Ping:  " + ping);
+                    mListViewArrayAdapter.add("Ping:  " + data.first + " said: " + data.second);
                     break;
                 case MESSAGE_PING_REPLY:
-                    String reply = (String) msg.obj;
-                    mListViewArrayAdapter.add("Reply:  " + reply);
+                    mListViewArrayAdapter.add("Reply:  " + data.first + " said: " + data.second);
                     break;
                 case MESSAGE_POST_TOAST:
-                    Toast.makeText(getApplicationContext(), (String) msg.obj, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), data.first + " said: " + data.second, Toast.LENGTH_LONG).show();
                     break;
                 default:
                     break;
@@ -138,11 +139,12 @@ public class Service extends Activity {
          * This code also prints the string it received from the user and the string it is
          * returning to the user to the screen.
          */
-        public String Ping(String inStr) {
-            sendUiMessage(MESSAGE_PING, inStr);
+        public String Ping(String name, String inStr) {
+        	final Pair<String, String> data = new Pair<String, String>(name, inStr);
+            sendUiMessage(MESSAGE_PING, data);
 
             /* Simply echo the ping message. */
-            sendUiMessage(MESSAGE_PING_REPLY, inStr);
+            sendUiMessage(MESSAGE_PING_REPLY, data);
             return inStr;
         }        
 
